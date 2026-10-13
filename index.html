@@ -20,7 +20,8 @@
        font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
   .wrap{max-width:620px;margin:0 auto;padding:40px 20px 48px}
   header{text-align:center;margin-bottom:40px}
-  .logo{display:block;max-width:200px;max-height:96px;width:auto;height:auto;margin:0 auto}
+  .logo{display:block;width:150px;height:auto;margin:0 auto;mix-blend-mode:multiply}
+  @media (min-width:560px){.logo{width:170px}}
   .wordmark{display:none;font-family:"Cormorant Garamond",Georgia,serif;font-size:26px;font-weight:600;letter-spacing:.06em}
   .label{color:var(--bronze);font-size:12px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;margin-bottom:14px}
   h1{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-size:clamp(32px,8vw,44px);line-height:1.12;margin-bottom:18px}
@@ -98,7 +99,7 @@
 <body>
 <main class="wrap">
   <header>
-    <img class="logo" src="logo.png" alt="Vipul Stone Suppliers" width="200" height="96"
+    <img class="logo" src="logo.jpg" alt="Vipul Stone Suppliers" width="440" height="381"
          onerror="this.style.display='none';document.getElementById('wordmark').style.display='block'">
     <div id="wordmark" class="wordmark">VIPUL STONE SUPPLIERS</div>
   </header>
