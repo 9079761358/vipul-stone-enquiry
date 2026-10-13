@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Custom Order Enquiry | Vipul Stone Suppliers</title>
+<meta name="description" content="Tell Vipul Stone Suppliers what you want made in stone. Share a photo and get stone options and a quotation within 24 business hours.">
+<meta name="theme-color" content="#F4EFE7">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg:#F4EFE7; --ink:#24201C; --bronze:#9A7446; --field:#FBF8F3; --line:#C9BDAA;
+    --muted:#6B6259; --beige:#EDE3D3; --error:#A33A2B; --green:#1F8F4E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{background:var(--bg);color:var(--ink);font-family:"Jost",system-ui,-apple-system,"Segoe UI",sans-serif;
+       font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:620px;margin:0 auto;padding:40px 20px 48px}
+  header{text-align:center;margin-bottom:40px}
+  .logo{display:block;max-width:200px;max-height:96px;width:auto;height:auto;margin:0 auto}
+  .wordmark{display:none;font-family:"Cormorant Garamond",Georgia,serif;font-size:26px;font-weight:600;letter-spacing:.06em}
+  .label{color:var(--bronze);font-size:12px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;margin-bottom:14px}
+  h1{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-size:clamp(32px,8vw,44px);line-height:1.12;margin-bottom:18px}
+  .intro{color:var(--muted);margin-bottom:36px}
+
+  form{display:block}
+  .grid{display:grid;grid-template-columns:1fr;gap:22px}
+  @media (min-width:560px){.grid{grid-template-columns:1fr 1fr;gap:22px 20px}}
+  .field{display:flex;flex-direction:column;min-width:0}
+  .field label,.legend{font-size:14px;font-weight:500;margin-bottom:8px;letter-spacing:.01em}
+  .req{color:var(--bronze)}
+  .opt{color:var(--muted);font-weight:400}
+  input[type=text],input[type=tel],input[type=email],textarea{
+    width:100%;background:var(--field);border:1px solid var(--line);border-radius:0;color:var(--ink);
+    font:inherit;font-size:16px;padding:13px 14px;outline:none;-webkit-appearance:none;appearance:none;
+    transition:border-color .15s}
+  input::placeholder,textarea::placeholder{color:#A39684}
+  input:focus,textarea:focus{border-color:var(--bronze)}
+  textarea{min-height:120px;resize:vertical}
+  .field.invalid input{border-color:var(--error)}
+  .err{display:none;color:var(--error);font-size:13px;margin-top:6px}
+  .field.invalid .err{display:block}
+
+  .section{margin-top:34px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px}
+  .chip{display:inline-flex;align-items:center;gap:9px;white-space:nowrap;cursor:pointer;
+        background:var(--field);border:1px solid var(--line);border-radius:0;color:var(--ink);
+        font:inherit;font-size:14px;padding:9px 14px;line-height:1.2;transition:border-color .15s,background .15s;
+        -webkit-tap-highlight-color:transparent}
+  .chip:hover{border-color:var(--bronze)}
+  .chip[aria-checked=true]{border-color:var(--bronze);background:var(--beige);box-shadow:inset 0 0 0 1px var(--bronze)}
+  .chip:focus-visible{outline:2px solid var(--bronze);outline-offset:2px}
+  .dot{width:12px;height:12px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+  .dot.none{background:transparent;border:1px dashed var(--muted);box-shadow:none}
+
+  .drop{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+        min-height:170px;border:1.5px dashed var(--line);background:var(--field);padding:24px;cursor:pointer;
+        transition:border-color .15s,background .15s}
+  .drop:hover,.drop.drag{border-color:var(--bronze)}
+  .drop input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+  .drop .icon{width:30px;height:30px;stroke:var(--bronze);margin-bottom:10px}
+  .drop .t1{font-weight:500}
+  .drop .t2{color:var(--muted);font-size:13px}
+  .drop img{display:none;max-width:100%;max-height:280px;object-fit:contain}
+  .drop.has img{display:block}
+  .drop.has .placeholder{display:none}
+  .filebar{display:none;justify-content:space-between;align-items:center;gap:12px;margin-top:10px;font-size:13px;color:var(--muted)}
+  .filebar.show{display:flex}
+  .filebar span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .linkbtn{background:none;border:0;color:var(--bronze);font:inherit;font-size:13px;text-decoration:underline;cursor:pointer;flex:none}
+
+  .btn{display:block;width:100%;border:0;border-radius:0;background:var(--ink);color:#fff;cursor:pointer;
+       font:inherit;font-size:14px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;padding:18px 20px;
+       text-align:center;text-decoration:none;transition:background .15s}
+  .btn:hover,.btn:focus-visible{background:var(--bronze)}
+  .submit{margin-top:38px}
+  .note{color:var(--muted);font-size:13px;margin-top:14px;text-align:center}
+
+  .thanks{display:none;background:var(--ink);color:#F4EFE7;padding:44px 28px;text-align:center}
+  .thanks.show{display:block}
+  .thanks h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-size:36px;line-height:1.15;margin-bottom:14px}
+  .thanks p{color:#D6CCBE;margin-bottom:28px}
+  .btn.wa{background:var(--green);margin-bottom:12px}
+  .btn.wa:hover{background:#187540}
+  .btn.ghost{background:transparent;border:1px solid #6B6259;color:#F4EFE7}
+  .btn.ghost:hover{background:transparent;border-color:var(--bronze);color:#fff}
+
+  footer{margin-top:56px;padding-top:24px;border-top:1px solid var(--line);text-align:center;font-size:14px;color:var(--muted)}
+  footer a{color:var(--ink);text-decoration:none}
+  footer a:hover{color:var(--bronze)}
+  footer .sep{margin:0 8px;color:var(--line)}
+  .hp{position:absolute;left:-9999px}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <img class="logo" src="logo.png" alt="Vipul Stone Suppliers" width="200" height="96"
+         onerror="this.style.display='none';document.getElementById('wordmark').style.display='block'">
+    <div id="wordmark" class="wordmark">VIPUL STONE SUPPLIERS</div>
+  </header>
+
+  <section id="formView">
+    <p class="label">Custom Order Enquiry</p>
+    <h1>Tell us what you want made in stone.</h1>
+    <p class="intro">No measurements or technical details needed. Just tell us who you are and show us a photo of what you like. We usually reply within 24 business hours with stone options and a quotation.</p>
+
+    <form id="enquiry" novalidate>
+      <div class="grid">
+        <div class="field" data-field="name">
+          <label for="name">Full name <span class="req">*</span></label>
+          <input id="name" name="name" type="text" autocomplete="name" required>
+          <span class="err">Please enter your name.</span>
+        </div>
+        <div class="field" data-field="phone">
+          <label for="phone">Phone / WhatsApp <span class="req">*</span></label>
+          <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+91" required>
+          <span class="err">Please enter a valid phone number.</span>
+        </div>
+        <div class="field" data-field="email">
+          <label for="email">Email <span class="opt">(optional)</span></label>
+          <input id="email" name="email" type="email" inputmode="email" autocomplete="email">
+          <span class="err">Please check your email address.</span>
+        </div>
+        <div class="field" data-field="city">
+          <label for="city">City / Country <span class="req">*</span></label>
+          <input id="city" name="city" type="text" autocomplete="address-level2" placeholder="e.g. Jaipur" required>
+          <span class="err">Please enter your city.</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="legend" id="stoneLabel">Preferred stone <span class="opt">(tap to choose)</span></div>
+        <div class="chips" id="chips" role="radiogroup" aria-labelledby="stoneLabel"></div>
+      </div>
+
+      <div class="section field">
+        <label for="desc">Describe what you want <span class="opt">(optional)</span></label>
+        <textarea id="desc" name="description" placeholder="In your own words, e.g. a small table for my living room, something like the photo"></textarea>
+      </div>
+
+      <div class="section">
+        <div class="legend">Upload a photo or sketch</div>
+        <label class="drop" id="drop">
+          <input id="photo" type="file" accept="image/*" aria-label="Upload a photo or sketch">
+          <div class="placeholder">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/>
+            </svg>
+            <div class="t1">Tap to choose a photo</div>
+            <div class="t2">From your gallery or camera</div>
+          </div>
+          <img id="preview" alt="Selected photo preview">
+        </label>
+        <div class="filebar" id="filebar"><span id="fileName"></span><button type="button" class="linkbtn" id="removePhoto">Remove</button></div>
+      </div>
+
+      <input class="hp" type="text" id="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+      <button type="submit" class="btn submit">Send on WhatsApp</button>
+      <p class="note">This opens WhatsApp with your details filled in. Attach your photo in the chat before sending. A copy is also emailed to Vipul Stone Suppliers.</p>
+    </form>
+  </section>
+
+  <section class="thanks" id="thanks" aria-live="polite">
+    <h2 id="thanksTitle">Thank you.</h2>
+    <p>WhatsApp is opening with your details. Please attach your photo in the chat before you press send.</p>
+    <a class="btn wa" id="waLink" href="#" target="_blank" rel="noopener">Open WhatsApp</a>
+    <button type="button" class="btn ghost" id="again">Send another enquiry</button>
+  </section>
+
+  <footer>
+    <a href="tel:+919462976734">+91 94629 76734</a><span class="sep">·</span>
+    <a href="tel:+918003627765">+91 80036 27765</a><span class="sep">·</span>
+    <a href="https://vipulstonesuppliers.com" target="_blank" rel="noopener">vipulstonesuppliers.com</a>
+  </footer>
+</main>
+
+<script>
+(function(){
+  var WA_NUMBER = "919462976734";
+  var FORM_ENDPOINT = "https://formsubmit.co/ajax/vipulstonesuppliers@gmail.com";
+  var STONES = [
+    ["Kandla Grey","#8f8c85"],["Mandana Red","#8c4b3c"],["Autumn Brown","#9b7756"],["Slate Grey","#5b5d5d"],
+    ["Raj Green","#7b7a5a"],["Camel Dust","#c6a47b"],["Garda Buff","#c9a86c"],["Ravina White","#e4ddd0"],
+    ["Basalt","#3c3c3b"],["Gwalior Mint","#d8c4a9"],["Agra Red","#9b5c46"],["Kota Blue","#6f7c84"],
+    ["Kota Yellow","#b59c64"],["Kota Black","#2f302f"],["Not sure yet",null]
+  ];
+  var DEFAULT_STONE = "Not sure yet";
+
+  var $ = function(id){ return document.getElementById(id); };
+  var form = $("enquiry"), chipsEl = $("chips"), photo = $("photo"), drop = $("drop"), preview = $("preview");
+  var selectedStone = DEFAULT_STONE, photoFile = null, previewURL = null;
+
+  /* ---------- Stone chips ---------- */
+  STONES.forEach(function(s){
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "chip"; b.setAttribute("role","radio"); b.dataset.value = s[0];
+    var d = document.createElement("span"); d.className = "dot" + (s[1] ? "" : " none");
+    if (s[1]) d.style.background = s[1];
+    b.appendChild(d); b.appendChild(document.createTextNode(s[0]));
+    b.addEventListener("click", function(){ selectStone(s[0]); });
+    chipsEl.appendChild(b);
+  });
+  function selectStone(v){
+    selectedStone = v;
+    Array.prototype.forEach.call(chipsEl.children, function(c){
+      var on = c.dataset.value === v;
+      c.setAttribute("aria-checked", on ? "true" : "false");
+      c.tabIndex = on ? 0 : -1;
+    });
+  }
+  chipsEl.addEventListener("keydown", function(e){
+    var keys = {ArrowRight:1,ArrowDown:1,ArrowLeft:-1,ArrowUp:-1};
+    if (!keys[e.key]) return;
+    e.preventDefault();
+    var list = Array.prototype.slice.call(chipsEl.children);
+    var i = list.findIndex(function(c){ return c.dataset.value === selectedStone; });
+    var n = list[(i + keys[e.key] + list.length) % list.length];
+    selectStone(n.dataset.value); n.focus();
+  });
+  selectStone(DEFAULT_STONE);
+
+  /* ---------- Photo ---------- */
+  function setPhoto(file){
+    if (previewURL) { URL.revokeObjectURL(previewURL); previewURL = null; }
+    photoFile = file || null;
+    if (photoFile) {
+      previewURL = URL.createObjectURL(photoFile);
+      preview.src = previewURL;
+      drop.classList.add("has");
+      $("fileName").textContent = photoFile.name || "Photo selected";
+      $("filebar").classList.add("show");
+    } else {
+      preview.removeAttribute("src");
+      drop.classList.remove("has");
+      $("filebar").classList.remove("show");
+      photo.value = "";
+    }
+  }
+  photo.addEventListener("change", function(){
+    var f = photo.files && photo.files[0];
+    if (f && /^image\//.test(f.type)) setPhoto(f);
+  });
+  $("removePhoto").addEventListener("click", function(){ setPhoto(null); });
+  ["dragenter","dragover"].forEach(function(t){ drop.addEventListener(t,function(e){ e.preventDefault(); drop.classList.add("drag"); }); });
+  ["dragleave","drop"].forEach(function(t){ drop.addEventListener(t,function(){ drop.classList.remove("drag"); }); });
+  drop.addEventListener("drop", function(e){
+    e.preventDefault();
+    var f = e.dataTransfer && e.dataTransfer.files[0];
+    if (f && /^image\//.test(f.type)) setPhoto(f);
+  });
+
+  // Shrink large phone photos before emailing (keeps upload fast on mobile data).
+  function compressImage(file){
+    return new Promise(function(resolve){
+      if (!file || !/^image\/(jpeg|png|webp)$/.test(file.type) || file.size < 900 * 1024) return resolve(file);
+      var img = new Image(), url = URL.createObjectURL(file);
+      img.onload = function(){
+        var max = 1800, w = img.naturalWidth, h = img.naturalHeight, r = Math.min(1, max / Math.max(w, h));
+        var c = document.createElement("canvas"); c.width = Math.round(w * r); c.height = Math.round(h * r);
+        c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+        URL.revokeObjectURL(url);
+        c.toBlob(function(b){
+          if (!b || b.size >= file.size) return resolve(file);
+          var name = (file.name || "photo").replace(/\.[^.]+$/, "") + ".jpg";
+          try { resolve(new File([b], name, {type:"image/jpeg"})); } catch(_) { b.name = name; resolve(b); }
+        }, "image/jpeg", 0.82);
+      };
+      img.onerror = function(){ URL.revokeObjectURL(url); resolve(file); };
+      img.src = url;
+    });
+  }
+
+  /* ---------- Validation ---------- */
+  function val(id){ return $(id).value.trim(); }
+  function setInvalid(name, bad){
+    form.querySelector('[data-field="'+name+'"]').classList.toggle("invalid", bad);
+    return bad;
+  }
+  function validate(){
+    var first = null;
+    var checks = [
+      ["name",  !val("name")],
+      ["phone", val("phone").replace(/\D/g,"").length < 10],
+      ["email", !!val("email") && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val("email"))],
+      ["city",  !val("city")]
+    ];
+    checks.forEach(function(c){ if (setInvalid(c[0], c[1]) && !first) first = c[0]; });
+    if (first) { var el = $(first); el.focus(); el.scrollIntoView({behavior:"smooth", block:"center"}); }
+    return !first;
+  }
+  ["name","phone","email","city"].forEach(function(id){
+    $(id).addEventListener("input", function(){ setInvalid(id, false); });
+  });
+
+  /* ---------- Submit ---------- */
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    if ($("honey").value) return;          // bot trap
+    if (!validate()) return;
+
+    var d = {
+      name: val("name"), phone: val("phone"), email: val("email"),
+      city: val("city"), stone: selectedStone, description: val("desc")
+    };
+    var msg = [
+      "Hello Vipul Stone Suppliers, I'd like a quotation.",
+      "Name: " + d.name,
+      "Phone: " + d.phone,
+      "Email: " + (d.email || "-"),
+      "City: " + d.city,
+      "Stone: " + d.stone,
+      "Description: " + (d.description || "-"),
+      "(I will attach my photo in this chat.)"
+    ].join("\n");
+    var waURL = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(msg);
+
+    // Open WhatsApp immediately, while still inside the tap, so pop-up blockers allow it.
+    window.open(waURL, "_blank", "noopener");
+
+    // Email copy in the background.
+    compressImage(photoFile).then(function(file){
+      var fd = new FormData();
+      fd.append("Name", d.name);
+      fd.append("Phone / WhatsApp", d.phone);
+      fd.append("email", d.email || "-");
+      fd.append("City / Country", d.city);
+      fd.append("Preferred stone", d.stone);
+      fd.append("Description", d.description || "-");
+      if (file) fd.append("attachment", file, file.name || "photo.jpg");
+      fd.append("_subject", "New catalogue enquiry — Vipul Stone Suppliers");
+      fd.append("_template", "table");
+      fd.append("_captcha", "false");
+      return fetch(FORM_ENDPOINT, { method:"POST", body:fd, headers:{ "Accept":"application/json" } });
+    }).catch(function(){ /* WhatsApp is the primary channel; ignore email errors */ });
+
+    // Thank-you panel.
+    $("thanksTitle").textContent = "Thank you, " + d.name.split(/\s+/)[0] + ".";
+    $("waLink").href = waURL;
+    $("formView").style.display = "none";
+    $("thanks").classList.add("show");
+    window.scrollTo({top:0, behavior:"smooth"});
+  });
+
+  $("again").addEventListener("click", function(){
+    form.reset(); setPhoto(null); selectStone(DEFAULT_STONE);
+    form.querySelectorAll(".invalid").forEach(function(f){ f.classList.remove("invalid"); });
+    $("thanks").classList.remove("show");
+    $("formView").style.display = "";
+    window.scrollTo({top:0, behavior:"smooth"});
+    $("name").focus({preventScroll:true});
+  });
+})();
+</script>
+</body>
+</html>
