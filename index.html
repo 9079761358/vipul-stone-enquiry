@@ -86,6 +86,10 @@
   .thanks p{color:#D6CCBE;margin-bottom:28px}
   .btn.wa{background:var(--green);margin-bottom:12px}
   .btn.wa:hover{background:#187540}
+  .thanks .step{font-size:14px;margin:10px 0 14px}
+  .thanks .step strong{color:#fff;font-weight:500}
+  .btn.share{background:var(--bronze);margin-bottom:12px}
+  .btn.share:hover{background:#86643B}
   .btn.ghost{background:transparent;border:1px solid #6B6259;color:#F4EFE7}
   .btn.ghost:hover{background:transparent;border-color:var(--bronze);color:#fff}
 
@@ -168,8 +172,12 @@
 
   <section class="thanks" id="thanks" aria-live="polite">
     <h2 id="thanksTitle">Thank you.</h2>
-    <p>WhatsApp is opening with your details. Please attach your photo in the chat before you press send.</p>
+    <p id="thanksMsg">WhatsApp is opening with your details. Please attach your photo in the chat before you press send.</p>
     <a class="btn wa" id="waLink" href="#" target="_blank" rel="noopener">Open WhatsApp</a>
+    <div id="shareBox" style="display:none">
+      <p class="step">After sending the message, come back here and tap below. Choose <strong>WhatsApp</strong>, then the <strong>Vipul Stone Suppliers</strong> chat at the top of your list.</p>
+      <button type="button" class="btn share" id="sharePhoto">Send photo on WhatsApp</button>
+    </div>
     <button type="button" class="btn ghost" id="again">Send another enquiry</button>
   </section>
 
@@ -342,12 +350,34 @@
     // Thank-you panel.
     $("thanksTitle").textContent = "Thank you, " + d.name.split(/\s+/)[0] + ".";
     $("waLink").href = waURL;
+
+    // A wa.me link can only carry text, so the photo is sent as a second step via the phone's share sheet.
+    sharePhotoFile = photoFile;
+    shareName = d.name;
+    var canShare = !!(photoFile && navigator.canShare && navigator.canShare({ files: [photoFile] }));
+    $("shareBox").style.display = canShare ? "block" : "none";
+    $("thanksMsg").textContent = !photoFile
+      ? "WhatsApp is opening with your details filled in. Just press send in the chat."
+      : canShare
+        ? "WhatsApp is opening with your details. Press send there first, then send your photo with the button below."
+        : "WhatsApp is opening with your details. Please attach your photo in the chat before you press send.";
+
     $("formView").style.display = "none";
     $("thanks").classList.add("show");
     window.scrollTo({top:0, behavior:"smooth"});
   });
 
+  var sharePhotoFile = null, shareName = "";
+  $("sharePhoto").addEventListener("click", function(){
+    if (!sharePhotoFile) return;
+    navigator.share({
+      files: [sharePhotoFile],
+      text: "Photo for my stone enquiry — " + shareName
+    }).catch(function(){ /* user closed the share sheet */ });
+  });
+
   $("again").addEventListener("click", function(){
+    sharePhotoFile = null; $("shareBox").style.display = "none";
     form.reset(); setPhoto(null); selectStone(DEFAULT_STONE);
     form.querySelectorAll(".invalid").forEach(function(f){ f.classList.remove("invalid"); });
     $("thanks").classList.remove("show");
